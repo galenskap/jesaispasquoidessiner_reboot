@@ -1,0 +1,51 @@
+body {
+    background: #151515;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+.container {
+    max-width: 80%;
+    margin: 4rem auto;
+    text-align: center;
+}
+h1 {
+    font-size: 3rem;
+    margin: 2rem auto;
+}
+.reponse {
+    margin-top: 5rem;
+    font-size: 2rem;
+    background: white;
+    color: #151515;
+    padding: 1rem 3rem;
+    display: inline-block;
+}
+.btn {
+    background: #151515;
+    color: white;
+    padding: 1rem;
+    text-decoration: none;
+    border-radius: 3px;
+    opacity: 1;
+    transition: background 0.25s ease-in-out;
+    display: block;
+    margin: 5rem auto 1rem;
+    max-width: 170px;
+    border: 1px solid white;
+}
+.btn:hover {
+    background:#3c6960;
+}
+.social {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+}
+.github {
+    display: block;
+    text-indent: -9999px;
+    overflow: hidden;
+    background: url('../img/github.png') no-repeat;
+    width: 32px;
+    height: 32px;
+}

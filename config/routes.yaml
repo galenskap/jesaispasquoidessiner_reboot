@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+   path: /
+   controller: App\Controller\MainController::home
+
+idea_show:
+    path:       /subject/{subject_id}/situation/{situation_id}
+    controller: App\Controller\MainController::showIdea
+    methods:    GET|HEAD
+    requirements:
+        subject_id: '\d+'
+        situation_id: '\d+'

@@ -19,6 +19,16 @@ class SituationRepository extends ServiceEntityRepository
         parent::__construct($registry, Situation::class);
     }
 
+    public function findByRandom(): ?Situation
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('RAND()')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Situation[] Returns an array of Situation objects
     //  */

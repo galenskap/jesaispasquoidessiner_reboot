@@ -19,6 +19,16 @@ class SubjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Subject::class);
     }
 
+    public function findByRandom(): ?Subject
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('RAND()')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Subject[] Returns an array of Subject objects
     //  */

@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Idées de sujets de dessin{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Je sais pas quoi dessiner ?</h1>
+        <div class="reponse">
+            <span class="item objet">
+              {{ subject.getText }}
+            </span>
+            <span class="item situation">{{ situation.getMaleSingularText }}</span>
+        </div>
+        <a href="/" class="btn reload">mouais...</a>
+    </div>
+{% endblock %}
