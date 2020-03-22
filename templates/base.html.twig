@@ -10,13 +10,22 @@
         {% endblock %}
     </head>
     <body>
-        <div class="pin account">
-          {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-              <a class="link" href="{{ path('dashboard') }}">{{ app.user.username }}</a>
-          {% else %}
-              <a class="link" href="{{ path('app_login') }}">Login</a>
-          {% endif %}
-        </div>
+        <a class="pin home" href="{{ path('index') }}">
+            <img src="{{ asset('img/home.svg') }}" class="homeimg" alt="" width=46 height=46 />
+            <span class="text">Accueil</span>
+        </a>
+
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a class="pin account" href="{{ path('dashboard') }}">
+                <img src="{{ vich_uploader_asset(app.user, 'avatar_file') }}" class="avatar" width=50 height=50 alt="avatar de {{ app.user.username }}"/>
+                <span class="username text">{{ app.user.username }}</span>
+            </a>
+        {% else %}
+            <a class="pin account" href="{{ path('app_login') }}">
+                <span class="text">Login</span>
+            </a>
+        {% endif %}
+
         {% block body %}{% endblock %}
 
         <div class="pin social">

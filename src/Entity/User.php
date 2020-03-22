@@ -6,10 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Vich\Uploadable
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
 class User implements UserInterface
@@ -53,9 +56,25 @@ class User implements UserInterface
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="avatar", fileNameProperty="avatar_name")
+     *
+     * @var File|null
      */
     private $avatar_file;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $avatar_name;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var string
+     */
+    protected $updatedAt;
 
     public function __construct()
     {
@@ -190,15 +209,67 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatarFile(): ?string
+    /**
+    * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $avatar_file
+    */
+   public function setAvatarFile(?File $avatar_file = null): void
+   {
+       $this->avatar_file = $avatar_file;
+
+       if (null !== $avatar_file) {
+           // It is required that at least one field changes if you are using doctrine
+           // otherwise the event listeners won't be called and the file is lost
+           $this->updatedAt = new \DateTimeImmutable();
+       }
+   }
+
+   public function getAvatarFile(): ?File
+   {
+       return $this->avatar_file;
+   }
+
+   public function setAvatarName(?string $avatar_name): void
+   {
+       $this->avatar_name = $avatar_name;
+   }
+
+   public function getAvatarName(): ?string
+   {
+       return $this->avatar_name;
+   }
+
+   /** @see \Serializable::serialize() */
+    public function serialize()
     {
-        return $this->avatar_file;
+        return serialize(array(
+            $this->id,
+            $this->username,
+        ));
     }
 
-    public function setAvatarFile(?string $avatar_file): self
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
     {
-        $this->avatar_file = $avatar_file;
-
-        return $this;
+        list (
+            $this->id,
+            $this->username,
+        ) = unserialize($serialized);
     }
+
+    
+    /**
+      * @return string
+      */
+     public function getUpdatedAt()
+     {
+         return $this->updatedAt;
+     }
+
+     /**
+      * @param string $updatedAt
+      */
+     public function setUpdatedAt($updatedAt)
+     {
+         $this->updatedAt = $updatedAt;
+     }
 }

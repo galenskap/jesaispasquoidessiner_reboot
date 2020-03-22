@@ -37,14 +37,48 @@ h1 {
     background:#3c6960;
 }
 .pin {
-  position: fixed;
-  right: 2rem;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+.pin.home {
+    top: 2rem;
+    left: 2rem;
 }
 .pin.account {
-  top: 2rem;
+    top: 2rem;
+    right: 2rem;
+}
+.avatar {
+    border-radius: 50%;
+    z-index: 50;
 }
 .pin.social {
     bottom: 2rem;
+    right: 2rem;
+}
+.pin .text {
+    position: relative;
+    top: -2rem;
+    z-index: 1;
+    transition: .5s;
+}
+.pin:hover .text {
+    top: 0;
+    transition: .5s;
+}
+.homeimg {
+    display: block;
+    border: 2px solid white;
+    border-radius: 50%;
+    /* background: url('../img/home.svg') no-repeat; */
+    background-color:black;
+    width: 46px;
+    height: 46px;
 }
 .github {
     display: block;
