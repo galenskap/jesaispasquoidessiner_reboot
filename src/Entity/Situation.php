@@ -34,11 +34,26 @@ class Situation
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $female_plural_form;
+    private $female_plural_text;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getMatchingText(bool $is_subject_female, bool $is_subject_plural)
+    {
+      // default text
+      $text = $this->getMaleSingularText();
+
+      if ($is_subject_plural && $is_subject_female && !is_null($this->getFemalePluralText()))
+        $text = $this->getFemalePluralText();
+      else if ($is_subject_plural && !is_null($this->getMalePluralText()))
+        $text = $this->getMalePluralText();
+      else if (!$is_subject_plural && $is_subject_female && !is_null($this->getFemaleSingularText()))
+        $text = $this->getFemaleSingularText();
+
+      return $text;
     }
 
     public function getMaleSingularText(): ?string
@@ -77,14 +92,14 @@ class Situation
         return $this;
     }
 
-    public function getFemalePluralForm(): ?string
+    public function getFemalePluralText(): ?string
     {
-        return $this->female_plural_form;
+        return $this->female_plural_text;
     }
 
-    public function setFemalePluralForm(?string $female_plural_form): self
+    public function setFemalePluralText(?string $female_plural_text): self
     {
-        $this->female_plural_form = $female_plural_form;
+        $this->female_plural_text = $female_plural_text;
 
         return $this;
     }

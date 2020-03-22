@@ -9,7 +9,7 @@
             <span class="item objet">
               {{ subject.getText }}
             </span>
-            <span class="item situation">{{ situation.getMaleSingularText }}</span>
+            <span class="item situation">{{ situation.getMatchingText(subject.getIsFemale, subject.getIsPlural) }}</span>
         </div>
         <a href="/" class="btn reload">mouais...</a>
     </div>
