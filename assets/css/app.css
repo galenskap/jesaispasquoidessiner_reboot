@@ -36,10 +36,15 @@ h1 {
 .btn:hover {
     background:#3c6960;
 }
-.social {
-    position: fixed;
+.pin {
+  position: fixed;
+  right: 2rem;
+}
+.pin.account {
+  top: 2rem;
+}
+.pin.social {
     bottom: 2rem;
-    right: 2rem;
 }
 .github {
     display: block;

@@ -9,3 +9,7 @@ idea_show:
     requirements:
         subject_id: '\d+'
         situation_id: '\d+'
+
+dashboard:
+    path: /dashboard
+    controller: App\Controller\SubmissionsController::showDashboard

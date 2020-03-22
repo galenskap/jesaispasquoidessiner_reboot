@@ -5,10 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
 class User implements UserInterface
 {
@@ -39,6 +41,21 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Submission", mappedBy="author", orphanRemoval=true)
      */
     private $submissions;
+
+    /**
+     * @ORM\Column(type="string", length=80)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $avatar_file;
 
     public function __construct()
     {
@@ -145,6 +162,42 @@ class User implements UserInterface
                 $submission->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getAvatarFile(): ?string
+    {
+        return $this->avatar_file;
+    }
+
+    public function setAvatarFile(?string $avatar_file): self
+    {
+        $this->avatar_file = $avatar_file;
 
         return $this;
     }

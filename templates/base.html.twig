@@ -10,9 +10,16 @@
         {% endblock %}
     </head>
     <body>
+        <div class="pin account">
+          {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+              <a class="link" href="{{ path('dashboard') }}">{{ app.user.username }}</a>
+          {% else %}
+              <a class="link" href="{{ path('app_login') }}">Login</a>
+          {% endif %}
+        </div>
         {% block body %}{% endblock %}
 
-        <div class="social">
+        <div class="pin social">
             <a class="github" href="https://github.com/galenskap/jesaispasquoidessiner_reboot" title="Get the code on Github">Github</a>
         </div>
         {% block javascripts %}{% endblock %}
